@@ -880,9 +880,7 @@ remap: {
 			...{
 				required: bool
 
-				if !required {
-					name: string
-				}
+				name: string
 
 				multiple: bool | *false
 
@@ -890,7 +888,7 @@ remap: {
 			},
 		]
 		return: [#RemapReturnTypes, ...]
-		category:    "coerce" | "parse" | "text" | "hash" | "event"
+		category:    "coerce" | "parse" | "text" | "hash" | "event" | "object"
 		description: string
 		examples: [
 			...{
