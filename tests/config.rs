@@ -1,10 +1,10 @@
 use vector::{
-    config::{self, ConfigDiff},
+    config::{self, ConfigDiff, Format},
     topology,
 };
 
-async fn load(config: &str) -> Result<Vec<String>, Vec<String>> {
-    match config::load_from_str(config) {
+async fn load(config: &str, format: Format) -> Result<Vec<String>, Vec<String>> {
+    match config::load_from_str(config, format) {
         Ok(c) => {
             let diff = ConfigDiff::initial(&c);
             match (
@@ -46,7 +46,8 @@ async fn happy_path() {
         inputs = ["sampler"]
         encoding = "text"
         address = "127.0.0.1:9999"
-      "#,
+        "#,
+        Format::TOML,
     )
     .await
     .unwrap();
@@ -62,6 +63,7 @@ async fn happy_path() {
         [sinks]
         out = {type = "socket", mode = "tcp", inputs = ["sampler"], encoding = "text", address = "127.0.0.1:9999"}
       "#,
+      Format::TOML,
     )
     .await
     .unwrap();
@@ -69,14 +71,14 @@ async fn happy_path() {
 
 #[tokio::test]
 async fn early_eof() {
-    let err = load("[sinks]\n[sin").await.unwrap_err();
+    let err = load("[sinks]\n[sin", Format::TOML).await.unwrap_err();
 
     assert_eq!(err, vec!["expected a right bracket, found eof at line 2"]);
 }
 
 #[tokio::test]
 async fn bad_syntax() {
-    let err = load(r#"{{{"#).await.unwrap_err();
+    let err = load(r#"{{{"#, Format::TOML).await.unwrap_err();
 
     assert_eq!(
         err,
@@ -97,7 +99,8 @@ async fn missing_key() {
         inputs = ["in"]
         mode = "tcp"
         address = "127.0.0.1:9999"
-      "#,
+        "#,
+        Format::TOML,
     )
     .await
     .unwrap_err();
@@ -119,7 +122,8 @@ async fn missing_key2() {
         mode = "out"
         inputs = ["in"]
         address = "127.0.0.1:9999"
-      "#,
+        "#,
+        Format::TOML,
     )
     .await
     .unwrap_err();
@@ -141,7 +145,8 @@ async fn bad_type() {
         type = "jabberwocky"
         inputs = ["in"]
         address = "127.0.0.1:9999"
-      "#,
+        "#,
+        Format::TOML,
     )
     .await
     .unwrap_err();
@@ -180,7 +185,8 @@ async fn nonexistant_input() {
         inputs = ["asdf"]
         encoding = "text"
         address = "127.0.0.1:9999"
-      "#,
+        "#,
+        Format::TOML,
     )
     .await
     .unwrap_err();
@@ -220,7 +226,8 @@ async fn bad_regex() {
         inputs = ["sampler"]
         encoding = "text"
         address = "127.0.0.1:9999"
-      "#,
+        "#,
+        Format::TOML,
     )
     .await
     .unwrap_err();
@@ -246,7 +253,8 @@ async fn bad_regex() {
         inputs = ["parser"]
         encoding = "text"
         address = "127.0.0.1:9999"
-      "#,
+        "#,
+        Format::TOML,
     )
     .await
     .unwrap_err();
@@ -283,7 +291,8 @@ async fn good_regex_parser() {
         inputs = ["parser"]
         encoding = "text"
         address = "127.0.0.1:9999"
-      "#,
+        "#,
+        Format::TOML,
     )
     .await;
 
@@ -319,7 +328,8 @@ async fn good_tokenizer() {
         inputs = ["parser"]
         encoding = "text"
         address = "127.0.0.1:9999"
-      "#,
+        "#,
+        Format::TOML,
     )
     .await;
 
@@ -373,7 +383,8 @@ async fn bad_s3_region() {
 
         [sinks.out4.batch]
         max_size = 100000
-      "#,
+        "#,
+        Format::TOML,
     )
     .await
     .unwrap_err();
@@ -426,7 +437,8 @@ async fn warnings() {
         inputs = ["sampler1"]
         encoding = "text"
         address = "127.0.0.1:9999"
-      "#,
+        "#,
+        Format::TOML,
     )
     .await
     .unwrap();
@@ -484,7 +496,8 @@ async fn cycle() {
         inputs = ["four"]
         encoding = "text"
         address = "127.0.0.1:9999"
-      "#,
+        "#,
+        Format::TOML,
     )
     .await
     .unwrap_err();
@@ -500,19 +513,20 @@ async fn cycle() {
 async fn disabled_healthcheck() {
     load(
         r#"
-      [sources.in]
-      type = "socket"
-      mode = "tcp"
-      address = "127.0.0.1:1234"
+        [sources.in]
+        type = "socket"
+        mode = "tcp"
+        address = "127.0.0.1:1234"
 
-      [sinks.out]
-      type = "socket"
-      mode = "tcp"
-      inputs = ["in"]
-      address = "0.0.0.0:0"
-      encoding = "text"
-      healthcheck = false
-      "#,
+        [sinks.out]
+        type = "socket"
+        mode = "tcp"
+        inputs = ["in"]
+        address = "0.0.0.0:0"
+        encoding = "text"
+        healthcheck = false
+        "#,
+        Format::TOML,
     )
     .await
     .unwrap();
@@ -532,6 +546,7 @@ async fn parses_sink_no_request() {
         uri = "https://localhost"
         encoding = "json"
         "#,
+        Format::TOML,
     )
     .await
     .unwrap();
@@ -554,6 +569,7 @@ async fn parses_sink_partial_request() {
         [sinks.out.request]
         in_flight_limit = 42
         "#,
+        Format::TOML,
     )
     .await
     .unwrap();
@@ -582,6 +598,7 @@ async fn parses_sink_full_request() {
         retry_max_duration_secs = 10
         retry_initial_backoff_secs = 6
         "#,
+        Format::TOML,
     )
     .await
     .unwrap();
@@ -605,6 +622,7 @@ async fn parses_sink_full_batch_bytes() {
         max_size = 100
         timeout_secs = 10
         "#,
+        Format::TOML,
     )
     .await
     .unwrap();
@@ -630,6 +648,7 @@ async fn parses_sink_full_batch_event() {
         max_events = 100
         timeout_secs = 10
         "#,
+        Format::TOML,
     )
     .await
     .unwrap();
@@ -654,6 +673,7 @@ async fn parses_sink_full_auth() {
         user = "user"
         password = "password"
         "#,
+        Format::TOML,
     )
     .await
     .unwrap();
@@ -677,6 +697,7 @@ async fn parses_sink_full_es_basic_auth() {
         user = "user"
         password = "password"
         "#,
+        Format::TOML,
     )
     .await
     .unwrap();
@@ -702,6 +723,7 @@ async fn parses_sink_full_es_aws() {
         [sinks.out.auth]
         strategy = "aws"
         "#,
+        Format::TOML,
     )
     .await
     .unwrap();
@@ -739,7 +761,8 @@ async fn swimlanes() {
         inputs = ["splitting_gerrys.only_gerrys", "splitting_gerrys.no_gerrys"]
         encoding = "text"
         address = "127.0.0.1:9999"
-      "#,
+        "#,
+        Format::TOML,
     )
     .await
     .unwrap();

@@ -20,7 +20,7 @@ mod tests {
     use vector::{
         self,
         api::{self, Server},
-        config::{self, Config},
+        config::{self, Config, Format},
         internal_events::{emit, GeneratorEventProcessed, Heartbeat},
         test_util::{next_addr, retry_until},
     };
@@ -70,8 +70,8 @@ mod tests {
         config.build().unwrap()
     }
 
-    async fn from_str_config(conf: &str) -> vector::topology::RunningTopology {
-        let mut c = config::load_from_str(conf).unwrap();
+    async fn from_str_config(conf: &str, format: Format) -> vector::topology::RunningTopology {
+        let mut c = config::load_from_str(conf, format).unwrap();
         c.api.bind = Some(next_addr());
 
         let diff = config::ConfigDiff::initial(&c);
@@ -351,7 +351,8 @@ mod tests {
               type = "blackhole"
               inputs = ["events_processed_total_source"]
               print_amount = 100000
-        "#,
+            "#,
+            Format::TOML,
         )
         .await;
 
@@ -575,7 +576,8 @@ mod tests {
               type = "blackhole"
               inputs = ["component_added_source_1"]
               print_amount = 100000
-        "#,
+            "#,
+            Format::TOML,
         )
         .await;
 
@@ -627,7 +629,8 @@ mod tests {
               type = "blackhole"
               inputs = ["component_added_source_1", "component_added_source_2"]
               print_amount = 100000
-        "#,
+            "#,
+            Format::TOML,
         )
         .unwrap();
 
@@ -665,7 +668,8 @@ mod tests {
               type = "blackhole"
               inputs = ["component_removed_source_1", "component_removed_source_2"]
               print_amount = 100000
-        "#,
+            "#,
+            Format::TOML,
         )
         .await;
 
@@ -712,7 +716,8 @@ mod tests {
               type = "blackhole"
               inputs = ["component_removed_source_1"]
               print_amount = 100000
-        "#,
+            "#,
+            Format::TOML,
         )
         .unwrap();
 
