@@ -70,7 +70,7 @@ mod tests {
 
         value_optional {
             expr: |_| Md5Fn { value: Box::new(Noop) },
-            def: TypeDef { fallible: true, optional: true, kind: Kind::Bytes },
+            def: TypeDef { fallible: true, kind: Kind::Bytes },
         }
     ];
 

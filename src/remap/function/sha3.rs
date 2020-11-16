@@ -105,7 +105,7 @@ mod tests {
                 value: Box::new(Noop),
                 variant: None,
             },
-            def: TypeDef { fallible: true, optional: true, kind: Kind::Bytes },
+            def: TypeDef { fallible: true, kind: Kind::Bytes },
         }
     ];
 
