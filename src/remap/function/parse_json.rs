@@ -140,7 +140,6 @@ mod tests {
             },
             def: TypeDef {
                 fallible: true,
-                optional: true,
                 kind: Kind::Bytes | Kind::Boolean | Kind::Integer | Kind::Float | Kind::Array | Kind::Map | Kind::Null,
             },
         }

@@ -136,7 +136,6 @@ mod tests {
             expr: |_| ToBoolFn { value: Literal::from("foo".to_owned()).boxed(), default: None },
             def: TypeDef {
                 fallible: true,
-                optional: false,
                 kind: Kind::Boolean,
             },
         }
@@ -148,7 +147,6 @@ mod tests {
             },
             def: TypeDef {
                 fallible: true,
-                optional: false,
                 kind: Kind::Boolean,
             },
         }
@@ -160,7 +158,6 @@ mod tests {
             },
             def: TypeDef {
                 fallible: false,
-                optional: false,
                 kind: Kind::Boolean,
             },
         }
@@ -172,7 +169,6 @@ mod tests {
             },
             def: TypeDef {
                 fallible: false,
-                optional: false,
                 kind: Kind::Boolean,
             },
         }
@@ -184,7 +180,6 @@ mod tests {
             },
             def: TypeDef {
                 fallible: false,
-                optional: false,
                 kind: Kind::Boolean,
             },
         }

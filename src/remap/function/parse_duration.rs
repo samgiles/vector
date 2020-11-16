@@ -145,7 +145,7 @@ mod tests {
                 value: Box::new(Noop),
                 output: Literal::from("foo").boxed(),
             },
-            def: TypeDef { fallible: true, optional: true, kind: value::Kind::Float },
+            def: TypeDef { fallible: true, kind: value::Kind::Float },
         }
     ];
 

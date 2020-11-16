@@ -55,7 +55,6 @@ impl Expression for Arithmetic {
 
         TypeDef {
             fallible: true,
-            optional: false,
             kind,
         }
     }
@@ -79,7 +78,6 @@ mod tests {
             ),
             def: TypeDef {
                 fallible: true,
-                optional: false,
                 kind: Kind::Bytes | Kind::Boolean,
             },
         }
@@ -92,7 +90,6 @@ mod tests {
             ),
             def: TypeDef {
                 fallible: true,
-                optional: false,
                 kind: Kind::all(),
             },
         }
@@ -105,7 +102,6 @@ mod tests {
             ),
             def: TypeDef {
                 fallible: true,
-                optional: false,
                 kind: Kind::Bytes | Kind::Integer | Kind::Float,
             },
         }
@@ -118,7 +114,6 @@ mod tests {
             ),
             def: TypeDef {
                 fallible: true,
-                optional: false,
                 kind: Kind::Bytes | Kind::Integer | Kind::Float,
             },
         }
@@ -131,7 +126,6 @@ mod tests {
             ),
             def: TypeDef {
                 fallible: true,
-                optional: false,
                 kind: Kind::Integer | Kind::Float,
             },
         }
@@ -144,7 +138,6 @@ mod tests {
             ),
             def: TypeDef {
                 fallible: true,
-                optional: false,
                 kind: Kind::Integer | Kind::Float,
             },
         }
@@ -157,7 +150,6 @@ mod tests {
             ),
             def: TypeDef {
                 fallible: true,
-                optional: false,
                 kind: Kind::Integer | Kind::Float,
             },
         }
@@ -170,7 +162,6 @@ mod tests {
             ),
             def: TypeDef {
                 fallible: true,
-                optional: false,
                 kind: Kind::Boolean,
             },
         }
@@ -183,7 +174,6 @@ mod tests {
             ),
             def: TypeDef {
                 fallible: true,
-                optional: false,
                 kind: Kind::Boolean,
             },
         }
@@ -196,7 +186,6 @@ mod tests {
             ),
             def: TypeDef {
                 fallible: true,
-                optional: false,
                 kind: Kind::Boolean,
             },
         }
@@ -209,7 +198,6 @@ mod tests {
             ),
             def: TypeDef {
                 fallible: true,
-                optional: false,
                 kind: Kind::Boolean,
             },
         }
@@ -222,7 +210,6 @@ mod tests {
             ),
             def: TypeDef {
                 fallible: true,
-                optional: false,
                 kind: Kind::Boolean,
             },
         }
@@ -235,7 +222,6 @@ mod tests {
             ),
             def: TypeDef {
                 fallible: true,
-                optional: false,
                 kind: Kind::Boolean,
             },
         }
@@ -248,7 +234,6 @@ mod tests {
             ),
             def: TypeDef {
                 fallible: true,
-                optional: false,
                 kind: Kind::Boolean,
             },
         }

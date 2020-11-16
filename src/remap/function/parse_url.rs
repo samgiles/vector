@@ -101,7 +101,7 @@ mod tests {
 
         value_optional {
             expr: |_| ParseUrlFn { value: Box::new(Noop) },
-            def: TypeDef { fallible: true, optional: true, kind: value::Kind::Map },
+            def: TypeDef { fallible: true, kind: value::Kind::Map },
         }
     ];
 

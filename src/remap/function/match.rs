@@ -89,7 +89,7 @@ mod tests {
                 value: Box::new(Noop),
                 pattern: Regex::new("").unwrap(),
             },
-            def: TypeDef { fallible: true, optional: true, kind: Kind::Boolean },
+            def: TypeDef { fallible: true, kind: Kind::Boolean },
         }
     ];
 
