@@ -576,7 +576,7 @@ mod test {
 
 #[cfg(all(test, feature = "sources-stdin", feature = "sinks-console"))]
 mod resource_tests {
-    use super::{load_from_str, Resource};
+    use super::{load_from_str, Format, Resource};
     use std::collections::HashSet;
     use std::net::{Ipv4Addr, SocketAddr};
 
@@ -650,17 +650,18 @@ mod resource_tests {
     fn config_conflict_detected() {
         assert!(load_from_str(
             r#"
-        [sources.in0]
-        type = "stdin"
+            [sources.in0]
+            type = "stdin"
 
-        [sources.in1]
-        type = "stdin"
+            [sources.in1]
+            type = "stdin"
 
-        [sinks.out]
-        type = "console"
-        inputs = ["in0","in1"]
-        encoding = "json"
-        "#
+            [sinks.out]
+            type = "console"
+            inputs = ["in0","in1"]
+            encoding = "json"
+            "#,
+            Format::TOML,
         )
         .is_err());
     }
