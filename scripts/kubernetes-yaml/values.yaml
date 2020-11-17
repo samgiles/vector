@@ -4,8 +4,6 @@ global:
     image:
       # Use the latest release image.
       version: latest
-      # Use the debian flavor of vector image.
-      base: debian
 
     commonEnvKV:
       # Set the log level reasonably high.
