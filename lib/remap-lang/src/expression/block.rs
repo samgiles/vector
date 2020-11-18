@@ -34,7 +34,7 @@ impl Expression for Block {
         // The last expression determines the resulting value of the block.
         let mut type_def = type_defs
             .pop()
-            .unwrap_or(TypeDef::default().with_constraint(value::Kind::Null));
+            .unwrap_or_else(|| TypeDef::default().with_constraint(value::Kind::Null));
 
         type_def.fallible = fallible;
         type_def
