@@ -309,6 +309,7 @@ sources = [
   "sources-kubernetes-logs",
   "sources-logplex",
   "sources-mongodb_metrics",
+  "sources-nginx_metrics",
   "sources-prometheus",
   "sources-socket",
   "sources-splunk_hec",
@@ -332,6 +333,7 @@ sources-kafka = ["rdkafka"]
 sources-kubernetes-logs = ["kubernetes", "transforms-merge", "transforms-regex_parser", "file-source"]
 sources-logplex = ["sources-utils-http"]
 sources-mongodb_metrics = ["mongodb"]
+sources-nginx_metrics = ["sources-utils-http"]
 sources-prometheus = ["prometheus-parser"]
 sources-socket = ["bytesize", "listenfd", "tokio-util/udp", "sources-utils-tls", "sources-utils-unix"]
 sources-splunk_hec = ["bytesize", "sources-utils-tls", "warp"]
